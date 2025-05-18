@@ -1,0 +1,19 @@
+# External dependencies
+node_modules/
+
+# Build folders
+dist/
+scripts/dependencies/
+
+# TypeScript cache
+*.tsbuildinfo
+
+# dotenv environment variable files
+.env
+
+# SSL certificates and keys
+ssl/
+
+# Database files
+*.db
+*.db-*
