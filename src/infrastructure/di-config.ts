@@ -1,9 +1,9 @@
-import { DefaultTelegramClient, TelegramClient } from '@/clients'
+import { DbClient, DefaultTelegramClient, TelegramClient } from '@/clients'
 import { CommandController, DefaultCommandController, DefaultTextMessageController, TextMessageController } from '@/controllers'
 import { DbCommandDto, DbTextMessageDto, DbUserDto } from '@/dtos'
+import { EnvConfig } from '@/infrastructure/env-config'
 import { DefaultMessageRepository, DefaultUserRepository, MessageRepository, UserRepository } from '@/repositories'
 import { DefaultRouter, Router } from '@/routers'
-import { ConfigService, DbService } from '@/services'
 import { DbAbstractMessageTransformer, DbCommandTransformer, DbTextMessageTransformer, DbUserTransformer, TelegramAbstractMessageDecoder, TelegramCommandDecoder, TelegramTextMessageDecoder, TelegramUserTransformer } from '@/transformers'
 import { Container } from 'inversify'
 
@@ -18,9 +18,8 @@ export function composeObjectGraph(): Container {
     throw new Error('Attempted to compose object graph after it was already composed. Ensure the composition happens once only.')
   // Configure the object graph here
   const container = new Container()
-  // Services
-  container.bind(ConfigService).toSelf().inSingletonScope()
-  container.bind(DbService).toSelf().inSingletonScope()
+  // Configs
+  container.bind(EnvConfig).toSelf().inSingletonScope()
   // Transformers
   container.bind(DbAbstractMessageTransformer).toSelf().inSingletonScope()
   container.bind(DbCommandTransformer).toSelf().inSingletonScope()
@@ -40,7 +39,8 @@ export function composeObjectGraph(): Container {
   // Controllers
   container.bind<CommandController>('CommandController').to(DefaultCommandController).inSingletonScope()
   container.bind<TextMessageController>('TextMessageController').to(DefaultTextMessageController).inSingletonScope()
-  // Client
+  // Clients
+  container.bind(DbClient).toSelf().inSingletonScope()
   container.bind<TelegramClient>('TelegramClient').to(DefaultTelegramClient).inSingletonScope()
   // Router
   container.bind<Router>('Router').to(DefaultRouter).inSingletonScope()

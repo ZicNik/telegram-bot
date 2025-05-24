@@ -1,6 +1,6 @@
-import { tableKeyMap } from '@/infrastructure/db/db-schema'
+import { DbClient } from '@/clients'
+import { tableKeyMap } from '@/infrastructure/db-schema'
 import { DbMessage, TextMessage } from '@/models'
-import { DbService } from '@/services'
 import { dedent } from '@/shared/utils'
 import { DbTextMessageTransformer } from '@/transformers'
 import sqlite from 'better-sqlite3'
@@ -22,10 +22,10 @@ export class DbTextMessageDto {
   private statements: ReturnType<typeof preparedStatements>
 
   constructor(
-    @inject(DbService) dbService: DbService,
+    @inject(DbClient) client: DbClient,
     @inject(DbTextMessageTransformer) private transformer: DbTextMessageTransformer,
   ) {
-    this.statements = preparedStatements(dbService.db)
+    this.statements = preparedStatements(client.db)
   }
 
   addTextMessage(message: TextMessage): void {

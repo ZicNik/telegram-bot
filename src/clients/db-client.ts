@@ -1,13 +1,13 @@
+import { EnvConfig } from '@/infrastructure/env-config'
 import sqlite from 'better-sqlite3'
 import { inject, injectable } from 'inversify'
-import { ConfigService } from './config-service'
 
 @injectable()
-export class DbService {
+export class DbClient {
   readonly db: sqlite.Database
 
   constructor(
-    @inject(ConfigService) config: ConfigService,
+    @inject(EnvConfig) config: EnvConfig,
   ) {
     this.db = sqlite(config.dbPath, { fileMustExist: true, verbose: console.log })
   }

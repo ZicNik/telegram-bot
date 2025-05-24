@@ -1,6 +1,6 @@
-import { tableKeyMap } from '@/infrastructure/db/db-schema'
+import { DbClient } from '@/clients'
+import { tableKeyMap } from '@/infrastructure/db-schema'
 import { DbUser, User } from '@/models'
-import { DbService } from '@/services'
 import { dedent } from '@/shared/utils'
 import { DbUserTransformer } from '@/transformers'
 import sqlite from 'better-sqlite3'
@@ -29,10 +29,10 @@ export class DbUserDto {
   private statements: ReturnType<typeof preparedStatements>
 
   constructor(
-    @inject(DbService) dbService: DbService,
+    @inject(DbClient) client: DbClient,
     @inject(DbUserTransformer) private mapper: DbUserTransformer,
   ) {
-    this.statements = preparedStatements(dbService.db)
+    this.statements = preparedStatements(client.db)
   }
 
   getAllUsers(): User[] {

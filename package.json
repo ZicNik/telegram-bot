@@ -28,7 +28,7 @@
     "clean": "rm -rf dist",
     "check": "tsc --noEmit",
     "lint": "eslint",
-    "createDb": "tsup src/infrastructure/db/db-schema.ts --no-config --format cjs --dts --out-dir scripts/dependencies && node scripts/create-db.js",
+    "createDb": "tsup src/infrastructure/db-schema.ts --no-config --format cjs --dts --out-dir scripts/dependencies && node scripts/create-db.js",
     "setWebhook": "node scripts/set-webhook.js",
     "getWebhookInfo": "node scripts/get-webhook-info.js",
     "deleteWebhook": "node scripts/delete-webhook.js",

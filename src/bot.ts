@@ -1,13 +1,13 @@
 import { CommandController, TextMessageController } from '@/controllers'
-import { composeObjectGraph } from '@/infrastructure/di/di-config'
+import { composeObjectGraph } from '@/infrastructure/di-config'
+import { EnvConfig } from '@/infrastructure/env-config'
 import { commands, CommandType } from '@/models'
 import { Router } from '@/routers'
-import { ConfigService } from '@/services'
 import { readFileSync } from 'fs'
 
 export class Bot {
   constructor(
-    private config: ConfigService,
+    private config: EnvConfig,
     private router: Router,
     private commandController: CommandController,
     private messageController: TextMessageController,
@@ -33,7 +33,7 @@ export class Bot {
 
 const container = composeObjectGraph()
 const bot = new Bot(
-  container.get(ConfigService),
+  container.get(EnvConfig),
   container.get<Router>('Router'),
   container.get<CommandController>('CommandController'),
   container.get<TextMessageController>('TextMessageController'),

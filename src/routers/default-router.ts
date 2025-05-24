@@ -1,6 +1,6 @@
+import { EnvConfig } from '@/infrastructure/env-config'
 import { CommandMessage, commands, CommandType, CommandUpdate, UpdateType } from '@/models'
 import { UserRepository } from '@/repositories'
-import { ConfigService } from '@/services'
 import { TelegramCommandDecoder, TelegramTextMessageDecoder, TelegramUserTransformer } from '@/transformers'
 import { inject, injectable } from 'inversify'
 import { Telegraf } from 'telegraf'
@@ -33,7 +33,7 @@ export class DefaultRouter implements Router {
   private routes: RouteMap
 
   constructor(
-    @inject(ConfigService) config: ConfigService,
+    @inject(EnvConfig) config: EnvConfig,
     @inject(TelegramCommandDecoder) commandDecoder: TelegramCommandDecoder,
     @inject(TelegramTextMessageDecoder) textDecoder: TelegramTextMessageDecoder,
     @inject(TelegramUserTransformer) userTransformer: TelegramUserTransformer,

@@ -1,4 +1,4 @@
-import { ConfigService } from '@/services'
+import { EnvConfig } from '@/infrastructure/env-config'
 import { inject, injectable } from 'inversify'
 import { Telegram } from 'telegraf'
 import { TelegramClient } from './telegram-client'
@@ -8,7 +8,7 @@ export class DefaultTelegramClient implements TelegramClient {
   private client: Telegram
 
   constructor(
-    @inject(ConfigService) config: ConfigService,
+    @inject(EnvConfig) config: EnvConfig,
   ) {
     this.client = new Telegram(config.botToken)
   }

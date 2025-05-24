@@ -12,7 +12,7 @@ const schema = z.object({
 })
 
 @injectable()
-export class ConfigService {
+export class EnvConfig {
   private config: z.infer<typeof schema>
 
   constructor() {

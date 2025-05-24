@@ -1,6 +1,6 @@
-import { tableKeyMap } from '@/infrastructure/db/db-schema'
+import { DbClient } from '@/clients'
+import { tableKeyMap } from '@/infrastructure/db-schema'
 import { CommandMessage, DbMessage } from '@/models'
-import { DbService } from '@/services'
 import { dedent } from '@/shared/utils'
 import { DbCommandTransformer } from '@/transformers'
 import sqlite from 'better-sqlite3'
@@ -22,10 +22,10 @@ export class DbCommandDto {
   private statements: ReturnType<typeof preparedStatements>
 
   constructor(
-    @inject(DbService) dbService: DbService,
+    @inject(DbClient) client: DbClient,
     @inject(DbCommandTransformer) private transformer: DbCommandTransformer,
   ) {
-    this.statements = preparedStatements(dbService.db)
+    this.statements = preparedStatements(client.db)
   }
 
   addCommand(message: CommandMessage): void {
